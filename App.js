@@ -1,7 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-native';
+
+import Topbar from './components/TopBar';
+
+/* Setting constants */
+const PageTypes = {
+  Documents: "Documents",
+  Camera: "Camera",
+  DocumentPage: "Document_Name"
+};
 
 export default function App() {
+
+  const [pageType, setPageType] = useState(PageTypes.Documents)
 
   var data = [
     { key: '1', title: 'Doc 1'},
@@ -12,16 +24,15 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Topbar pagetype={pageType} />
       <View style={styles.doclist}>
         <Text style={styles.header}>
           Edit Documents:
         </Text>
-
         <FlatList 
           data={data}
           renderItem={({item}) => <Text>{item.title}</Text>}
         />
-
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
