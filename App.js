@@ -1,8 +1,18 @@
+/*
+To do:
+ - Make Top bar and bottom bar components to switch between screens
+ - Make the document view component
+
+Notes: 
+
+*/
+
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-native';
 
 import Topbar from './components/TopBar';
+import BottomBar from './components/BottomBar';
 
 /* Setting constants */
 const PageTypes = {
@@ -35,6 +45,7 @@ export default function App() {
         />
         <StatusBar style="auto" />
       </View>
+      <BottomBar pagetype={pageType} />
     </SafeAreaView>
   );
 }
