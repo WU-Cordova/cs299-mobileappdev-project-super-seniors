@@ -2,6 +2,8 @@
 To do:
  - Centering Picture icon in the Button
  - Remove Blue Button outline from button to make button a circle
+Notes:
+ - This file might be deleted so that it is just all on the main home page screen
 */
 
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
