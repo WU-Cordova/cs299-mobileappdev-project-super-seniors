@@ -1,35 +1,67 @@
 /* 
 To Do:
- - Create the document name list view
- - Create document image list view
- - Connect TopBar component to connect to change views.
+ - Style the list view
+ - Style the document view
 */
 import { SafeAreaView, View, Image, FlatList, Text } from "react-native";
 
-var data = [
+/* Constants */
+var testdata = [
     { key: '1', title: 'Doc 1'},
     { key: '2', title: 'Doc 2'},
     { key: '3', title: 'Doc 3'},
     { key: '4', title: 'Doc 4'},
 ];
 
-const BlankDocImage = require('../assets/FillerDoc.png')
+/* Pictures */
+const BlankDocImage = require('../assets/FillerDoc.png');
 
+const PictureList = props => {
+    return (
+        <View>
+            <FlatList 
+                data={props.data}
+                renderItem={({item}) => 
+                    <View>
+                        <Image source={BlankDocImage} />
+                        <Text>{item.title}</Text>
+                    </View>
+                }
+            />
+        </View>
+    );   
+};
 
+const DocumentList = props => {
+    return (
+        <View>
+            <FlatList 
+                data={props.data}
+                renderItem={({item}) => 
+                    <View>
+                        <Text>{item.title}</Text>
+                    </View>}
+                />
+        </View>
+    );
+};
 
 const ViewDocuments = ({docview}) => {
+
+    function displayChange (docview) {
+        switch (docview) {
+            case 'picture-view':
+                return <PictureList data={testdata} />;
+            case 'list-view':
+                return <DocumentList data={testdata} />;
+        }  
+    };
 
     return (
         <SafeAreaView>
             <View>
-                <FlatList 
-                    data={data}
-                    renderItem={({item}) => <Text>{item.title}</Text>}
-                />
+                {displayChange(docview)}
             </View>
-            <Text> 
-                {docview}
-            </Text>
         </SafeAreaView>
     );
 };

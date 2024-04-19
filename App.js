@@ -1,14 +1,13 @@
 /*
 To do:
  - Make Top bar and bottom bar components to switch between screens
- - Make the document view component
- - Make elements in the top bar inline and in thier proper place
  - Make the buttons work
- - Change the button icons to FontAwesome
- - Top Barshould change the App main view
-
+ - Style the Bottom Top bar
+ - Add bottom bar code to here
+ - Bottom bar should always be at the bottom of the screen 
+ - Data from the user which would be here needs to be given to the doc view component
 Notes: 
-
+ - All of the icons should be from the fontAwesome font library for consistency
 */
 
 import { StatusBar } from 'expo-status-bar';
@@ -34,7 +33,7 @@ const leftCornerIcons = {
 const rightCornerIcons = {
   PictureView: 'th-large', /* FontAwesome */
   ListView: 'list-ul', /* FontAwesome */
-  Help: 'help', /* Entypo */
+  Help: 'question', /* FontAwesome */
 };
 
 const documentViews = {
@@ -68,7 +67,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
-        <View style={styles.navButtions}>
+        <View style={styles.sortButtion}>
           <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={alert('Test')}>
             <Text>Sort</Text>
           </FontAwesome.Button>  
@@ -117,7 +116,7 @@ viewButtons: {
     flexDirection: 'row',
     paddingRight: 10, 
 },
-navButtions: {
+sortButtion: {
     flexDirection: 'row',
     paddingLeft: 10,
 },

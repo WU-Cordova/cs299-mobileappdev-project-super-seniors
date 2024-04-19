@@ -5,7 +5,7 @@ To do:
  - Change the button icons to FontAwesome
  - Top Barshould change the App main view
 Notes:
- - Clean Up Document, i think we hould scrap this
+ - Clean Up Document, i think we Should delete this file
 */
 
 import { Text, View, StyleSheet, SafeAreaView, Button, Alert } from "react-native";
