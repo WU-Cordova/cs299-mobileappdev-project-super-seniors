@@ -2,6 +2,7 @@
 To Do:
  - Style the list view
  - Style the document view
+ - Make the docuemnts link to thier respective document views
 */
 import { SafeAreaView, View, Image, FlatList, Text } from "react-native";
 
