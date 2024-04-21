@@ -1,37 +1,64 @@
-/* 
+/*
 To do:
- -
-Notes:
+ - Make Top bar and bottom bar components to switch between screens
+ - Make the document view component
+
+Notes: 
 
 */
 
-// import pakages
+import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-native';
-// import screens
-import Home from './screens/Home.js';
-import DocScan from './screens/DocScan.js';
 
-const Stack = createNativeStackNavigator();
+import Topbar from './components/TopBar';
+import BottomBar from './components/BottomBar';
 
-const App = () => {
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initalRouteName="DocScan">
-        <Stack.Screen 
-          name="DocScan"
-          component={DocScan}
-        />
-        <Stack.Screen 
-          name="Home"
-          component={Home}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+/* Setting constants */
+const PageTypes = {
+  Documents: "Documents",
+  Camera: "Camera",
+  DocumentPage: "Document_Name"
 };
 
-export default App;
+export default function App() {
+
+  const [pageType, setPageType] = useState(PageTypes.Documents)
+
+  var data = [
+    { key: '1', title: 'Doc 1'},
+    { key: '2', title: 'Doc 2'},
+    { key: '3', title: 'Doc 3'},
+    { key: '4', title: 'Doc 4'},
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Topbar pagetype={pageType} />
+      <View style={styles.doclist}>
+        <Text style={styles.header}>
+          Edit Documents:
+        </Text>
+        <FlatList 
+          data={data}
+          renderItem={({item}) => <Text>{item.title}</Text>}
+        />
+        <StatusBar style="auto" />
+      </View>
+      <BottomBar pagetype={pageType} />
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    fontWeight: "bold",
+  },
+  doclist: {
+    padding:20,
+  }
+});
