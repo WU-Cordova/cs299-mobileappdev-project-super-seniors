@@ -4,7 +4,8 @@ To Do:
  - Style the document view
  - Make the docuemnts link to thier respective document views
 */
-import { SafeAreaView, View, Image, FlatList, Text, StyleSheet, } from "react-native";
+import { list } from "firebase/storage";
+import { SafeAreaView, View, Image, FlatList, Text, StyleSheet,TouchableOpacity, Alert,Dimensions, PermissionsAndroid } from "react-native";
 
 /* Constants */
 var testdata = [
@@ -15,18 +16,27 @@ var testdata = [
 ];
 
 /* Pictures */
+const {width} = Dimensions.get('window');
+const itemWidth = (width) / 2;
 const BlankDocImage = require('../assets/FillerDoc.png');
 
 const PictureList = props => {
+
+    const addProductToCart = () => {
+        Alert.alert('Success', 'Item selected')
+    }
+
     return (
         <View style={styles.fileview} >
             <FlatList 
                 data={props.data}
-                style={styles.docimage}
+                numColumns={2}
                 renderItem={({item}) => 
                     <View>
-                        <Image source={BlankDocImage}/>
-                        <Text>{item.title}</Text>
+                        <TouchableOpacity style={styles.docbutton}>
+                        <Image source={BlankDocImage} style={styles.docimage}/>
+                        <Text style={styles.listtext}>{item.title}</Text>
+                        </TouchableOpacity>
                     </View>
                 }
             />
@@ -35,15 +45,19 @@ const PictureList = props => {
 };
 
 const DocumentList = props => {
+    const itemselect = () => {
+        Alert.alert('Success', 'Doc selected')
+    }
     return (
         <View>
             <FlatList 
                 data={props.data}
+                style={styles.listview}
                 renderItem={({item}) => 
-                    <View>
+                    <TouchableOpacity style={styles.listbutton} onPress={itemselect}>
                         <Text>{item.title}</Text>
-                    </View>}
-                />
+                    </TouchableOpacity>
+                }/>
         </View>
     );
 };
@@ -70,10 +84,32 @@ const ViewDocuments = ({docview}) => {
 
 const styles = StyleSheet.create({
     fileview: {
-        flexDirection: 'row',
+        flexDirection: 'column',
+        justifyContent: 'flex-',
     },
+    ///////ListView/////////
+    listview:{
+        flexDirection: 'column',
+    },
+    listbutton:{
+        alignItems: 'left',
+        justifyContent: 'center',
+        borderWidth:1,
+        height: 100,
+        padding: 20
+    }, listtext:{
+        textAlign: 'center'
+    }, 
+    ///////DocView/////////
     docimage: {
-        width: '50%'
+        alignSelf: 'center',
+        resizeMode: 'contain',
+        width: itemWidth - 5
+    },
+    docbutton:{
+        borderWidth:1,
+        borderRadius:1,
+        width: itemWidth,
     }
 });
 
