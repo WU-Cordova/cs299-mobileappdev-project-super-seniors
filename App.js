@@ -20,14 +20,14 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initalRouteName="DocScan">
-        <Stack.Screen 
-          name="DocScan"
-          component={DocScan}
-        />
+      <Stack.Navigator initalRouteName="Home">
         <Stack.Screen 
           name="Home"
           component={Home}
+        />
+        <Stack.Screen 
+          name="DocScan"
+          component={DocScan}
         />
       </Stack.Navigator>
     </NavigationContainer>

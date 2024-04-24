@@ -12,7 +12,7 @@ Notes:
 
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScollView, Card } from 'react-native';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
 import BottomBar from '../components/BottomBar';
@@ -39,7 +39,12 @@ const rightCornerIcons = {
 const documentViews = {
   PictureView: 'picture-view',
   ListView: 'list-view',
+};
+
+const bottomBarIcons = {
+  Camera: 'camera',
 }
+
 
 const Home = ({navigation}) => {
 
@@ -72,7 +77,7 @@ const Home = ({navigation}) => {
             <Text>Sort</Text>
           </FontAwesome.Button>  
         </View>
-          <Text>{pageType}</Text>
+        <Text>{pageType}</Text>
         <View style={styles.viewButtons}>
             <FontAwesome.Button name={rightCornerIcons.ListView} onPress={changeViewPress} disabled={!picViewTrue} />
             <FontAwesome.Button name={rightCornerIcons.PictureView} onPress={changeViewPress} disabled={picViewTrue}/>
@@ -83,12 +88,18 @@ const Home = ({navigation}) => {
         <Text style={styles.header}>
           Edit Documents:
         </Text>
-
         <ViewDocuments docview={pageView} />
         <StatusBar style="auto" />
       </View>
 
-      <BottomBar pagetype={pageType} />
+      <View style={styles.bottomBar}>
+        <FontAwesome.Button 
+          name={bottomBarIcons.Camera} 
+          onPress={alert('Test')} 
+          style={styles.cameraButton}
+          mask='circle'
+        />
+      </View>
 
     </SafeAreaView>
   );
@@ -101,9 +112,12 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: "bold",
+    paddingBottom: 20,
+    fontSize: 20,
   },
   doclist: {
     padding:20,
+    height: '85%',
   },
   topbar: {
     alignItems: 'center',
@@ -111,6 +125,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'black',
     borderWidth: 1,
     flexDirection: 'row',
+    height: '5%',
 },
 viewButtons: {
     flexDirection: 'row',
@@ -119,6 +134,25 @@ viewButtons: {
 sortButtion: {
     flexDirection: 'row',
     paddingLeft: 10,
+},
+bottomBar :{
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderTopColor: 'black',
+  borderWidth: 1,
+  height: '10%',
+},
+cameraButton: {
+  color: '#097969',
+  justifyContent: 'center',
+  alignContent: 'center',
+  borderWidth: 2,
+  borderRadius: 30,
+  width: 60,
+  height: 60,
+  inconStyle: {
+      marginRight: 20,
+  }
 },
 });
 

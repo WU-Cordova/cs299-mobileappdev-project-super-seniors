@@ -4,7 +4,7 @@ To Do:
  - Style the document view
  - Make the docuemnts link to thier respective document views
 */
-import { SafeAreaView, View, Image, FlatList, Text } from "react-native";
+import { SafeAreaView, View, Image, FlatList, Text, StyleSheet, } from "react-native";
 
 /* Constants */
 var testdata = [
@@ -19,12 +19,13 @@ const BlankDocImage = require('../assets/FillerDoc.png');
 
 const PictureList = props => {
     return (
-        <View>
+        <View style={styles.fileview} >
             <FlatList 
                 data={props.data}
+                style={styles.docimage}
                 renderItem={({item}) => 
                     <View>
-                        <Image source={BlankDocImage} />
+                        <Image source={BlankDocImage}/>
                         <Text>{item.title}</Text>
                     </View>
                 }
@@ -66,5 +67,14 @@ const ViewDocuments = ({docview}) => {
         </SafeAreaView>
     );
 };
+
+const styles = StyleSheet.create({
+    fileview: {
+        flexDirection: 'row',
+    },
+    docimage: {
+        width: '50%'
+    }
+});
 
 export default ViewDocuments;
