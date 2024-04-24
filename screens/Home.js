@@ -12,7 +12,7 @@ Notes:
 
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScollView, Card } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
 import BottomBar from '../components/BottomBar';
@@ -64,6 +64,10 @@ const Home = ({navigation}) => {
     }
   };
 
+  function navigateDocScan () {
+    navigation.navigate('DocScan')
+  }
+
   /* button presses */
   const changeViewPress = () => {
     changeDocView()
@@ -93,12 +97,16 @@ const Home = ({navigation}) => {
       </View>
 
       <View style={styles.bottomBar}>
-        <FontAwesome.Button 
-          name={bottomBarIcons.Camera} 
-          onPress={alert('Test')} 
-          style={styles.cameraButton}
-          mask='circle'
-        />
+        <TouchableOpacity onPress={navigateDocScan}>
+          <View style={styles.cameraButton}>
+            <FontAwesome
+              name={bottomBarIcons.Camera} 
+              style={styles.cameraIcon}
+              size={30}
+              //mask='circle'
+            />
+          </View>
+        </TouchableOpacity>
       </View>
 
     </SafeAreaView>
@@ -141,18 +149,16 @@ bottomBar :{
   borderTopColor: 'black',
   borderWidth: 1,
   height: '10%',
+  backgroundColor: 'powerblue'
 },
 cameraButton: {
   color: '#097969',
   justifyContent: 'center',
-  alignContent: 'center',
+  alignItems: 'center',
   borderWidth: 2,
   borderRadius: 30,
   width: 60,
   height: 60,
-  inconStyle: {
-      marginRight: 20,
-  }
 },
 });
 
