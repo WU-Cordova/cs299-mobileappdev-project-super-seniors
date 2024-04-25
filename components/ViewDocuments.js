@@ -5,7 +5,9 @@ To Do:
  - Make the docuemnts link to thier respective document views
 */
 import { list } from "firebase/storage";
-import { SafeAreaView, View, Image, FlatList, Text, StyleSheet,TouchableOpacity,Alert } from "react-native";
+
+import { SafeAreaView, View, Image, FlatList, Text, StyleSheet,TouchableOpacity, Alert,Dimensions, PermissionsAndroid } from "react-native";
+
 
 /* Constants */
 var testdata = [
@@ -16,6 +18,10 @@ var testdata = [
 ];
 
 /* Pictures */
+
+const {width} = Dimensions.get('window');
+const itemWidth = (width) / 2;
+
 const BlankDocImage = require('../assets/FillerDoc.png');
 
 const PictureList = props => {
@@ -28,12 +34,15 @@ const PictureList = props => {
         <View style={styles.fileview} >
             <FlatList 
                 data={props.data}
-                style={styles.docimage}
+
                 numColumns={2}
                 renderItem={({item}) => 
                     <View>
+                        <TouchableOpacity style={styles.docbutton}>
                         <Image source={BlankDocImage} style={styles.docimage}/>
                         <Text style={styles.listtext}>{item.title}</Text>
+                        </TouchableOpacity>
+
                     </View>
                 }
             />
@@ -82,23 +91,36 @@ const ViewDocuments = ({docview}) => {
 const styles = StyleSheet.create({
     fileview: {
         flexDirection: 'column',
-        justifyContent: 'center',
+
+        justifyContent: 'flex-',
     },
-    docimage: {
-        width: '50%',
-        numColumns: 2
-    },
+    ///////ListView/////////
+
+
     listview:{
         flexDirection: 'column',
     },
     listbutton:{
-        alignItems: 'center',
+
+        alignItems: 'left',
         justifyContent: 'center',
         borderWidth:1,
-        height: 100
+        height: 100,
+        padding: 20
     }, listtext:{
         textAlign: 'center'
-    }, docimage: {
+    }, 
+    ///////DocView/////////
+    docimage: {
+        alignSelf: 'center',
+        resizeMode: 'contain',
+        width: itemWidth - 5
+    },
+    docbutton:{
+        borderWidth:1,
+        borderRadius:1,
+        width: itemWidth,
+
     }
 });
 
