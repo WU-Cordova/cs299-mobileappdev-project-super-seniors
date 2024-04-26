@@ -1,6 +1,10 @@
 /* 
 To do:
- -
+All these things are just things we need to add for this app to work
+ - Connecting tensor flow to the app
+ - Creating a PictureView.js doc where we can select the line of scanned text
+ - Connecting to firebase
+ - Authentication with firebase
 Notes:
 
 */
