@@ -1,7 +1,9 @@
 /* 
 To Do:
  - Connect this page to the PictureView.js document after taking a picture
- - 
+ - Add Zoom
+ - Add Auto Focus
+ - Make the header include flip camera, flash, 
 Notes:
  -
 */
@@ -53,13 +55,6 @@ const DocScan = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topbarContainer}>
-        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-          <Text>
-            Flip Camera
-          </Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.cameraContainer} >
         <Camera 
           style={styles.camera} 
@@ -67,17 +62,22 @@ const DocScan = ({navigation}) => {
           ref={ref => setCamera(ref)}
           ratio={'1:1'}
         >
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => takePicture()}>
-              <FontAwesome 
-                name='circle' 
-                size={70}
-                style={styles.whiteColor}
-              />
-            </TouchableOpacity>
-            {capturedImage && <Image source={{uri: capturedImage}} style={styles.picturePreview} />}
-          </View>
+          {capturedImage && <Image source={{uri: capturedImage}} style={styles.picturePreview} />}
         </Camera>
+      </View>
+      <View style={styles.bottomBarContainer}>
+        <TouchableOpacity style={styles.cameraButton} onPress={() => takePicture()}>
+          <FontAwesome 
+            name='circle' 
+            size={70}
+            style={styles.whiteColor}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+          <Text>
+            Flip Camera
+          </Text>
+        </TouchableOpacity>
       </View>
       
     </View>
@@ -96,21 +96,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    margin: 32,
   },
-  topbarContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    height: '5%'
-
+  bottomBarContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 1.0)',
+    height: '20%',
   },
   button: {
     flex: 1,
     alignSelf: 'flex-end',
     alignItems: 'center',
-  },
-  whiteColor: {
-    color: 'white'
   },
   text: {
     fontSize: 24,
@@ -125,13 +119,20 @@ const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1,
     flexDirection: 'row',
-    height: '95%',
+    height: '80%',
+  },
+  cameraButton: {
+    alignSelf: 'center',
+    paddingTop: '2em',
+  },
+  whiteColor: {
+    color: 'white',
   }
 });
 
 const CameraPreview = ({photo}) => {
   <View>
-    <ImageBackground
+    <Image
       source={{uri: photo && photo.uri}}
     />
   </View>
