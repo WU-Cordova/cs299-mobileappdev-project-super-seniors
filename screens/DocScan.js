@@ -14,6 +14,14 @@ import { useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import IconButton from '../components/IconButtons'
+
+// constants
+const icons = {
+  picButton: 'circle',
+  flipCamera: 'refresh'
+};
+
 const DocScan = ({navigation}) => {
   const [type, setType] = useState(CameraType.back);
   const [previewVisible, setPreviewVisible] = useState(false)
@@ -68,11 +76,18 @@ const DocScan = ({navigation}) => {
       <View style={styles.bottomBarContainer}>
         <TouchableOpacity style={styles.cameraButton} onPress={() => takePicture()}>
           <FontAwesome 
-            name='circle' 
-            size={70}
+            name={icons.picButton} 
+            size={80}
             style={styles.whiteColor}
           />
         </TouchableOpacity>
+        <IconButton 
+          onPress={toggleCameraType}
+          icon={icons.flipCamera}
+          iconStyle={styles.whiteColor}
+          buttonStyle={styles.button}
+          style={styles.flipButton}
+        />
         <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
           <Text>
             Flip Camera
@@ -123,19 +138,14 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     alignSelf: 'center',
-    paddingTop: '2em',
+    marginTop: '10%'
   },
   whiteColor: {
     color: 'white',
-  }
+  },
+  flipButton: {
+    alignSelf: 'flex-end',
+  },
 });
-
-const CameraPreview = ({photo}) => {
-  <View>
-    <Image
-      source={{uri: photo && photo.uri}}
-    />
-  </View>
-}
 
 export default DocScan;

@@ -15,7 +15,6 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
-import BottomBar from '../components/BottomBar';
 import ViewDocuments from '../components/ViewDocuments';
 
 /* Setting constants */
