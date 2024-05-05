@@ -1,6 +1,9 @@
 /* 
 To Do:
- - 
+ - Connect this page to the PictureView.js document after taking a picture
+ - Add Zoom
+ - Add Auto Focus
+ - Make the header include flip camera, flash, 
 Notes:
  -
 */
@@ -8,11 +11,23 @@ Notes:
 // import packages
 import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
+import IconButton from '../components/IconButtons'
+
+// constants
+const icons = {
+  picButton: 'circle',
+  flipCamera: 'refresh'
+};
 
 const DocScan = ({navigation}) => {
   const [type, setType] = useState(CameraType.back);
+  const [previewVisible, setPreviewVisible] = useState(false)
+  const [capturedImage, setCapturedImage] = useState(null)
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [camera, setCamera] = useState(null);
 
   if (!permission) {
     return (
@@ -33,19 +48,53 @@ const DocScan = ({navigation}) => {
     )
   }
 
+  const takePicture = async () => {
+    if (camera) {
+      const photo = await camera.takePictureAsync(null);
+      setCapturedImage(photo.uri);
+      
+    }
+    alert("pic")
+  }
+
   function toggleCameraType () {
     setType(current => (current === CameraType.back ? CameraType.front: CameraType.back))
   }
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      <View style={styles.cameraContainer} >
+        <Camera 
+          style={styles.camera} 
+          type={type}
+          ref={ref => setCamera(ref)}
+          ratio={'1:1'}
+        >
+          {capturedImage && <Image source={{uri: capturedImage}} style={styles.picturePreview} />}
+        </Camera>
+      </View>
+      <View style={styles.bottomBarContainer}>
+        <TouchableOpacity style={styles.cameraButton} onPress={() => takePicture()}>
+          <FontAwesome 
+            name={icons.picButton} 
+            size={80}
+            style={styles.whiteColor}
+          />
+        </TouchableOpacity>
+        <IconButton 
+          onPress={toggleCameraType}
+          icon={icons.flipCamera}
+          iconStyle={styles.whiteColor}
+          buttonStyle={styles.button}
+          style={styles.flipButton}
+        />
+        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+          <Text>
+            Flip Camera
+          </Text>
+        </TouchableOpacity>
+      </View>
+      
     </View>
   );
 };
@@ -62,7 +111,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    margin: 64,
+  },
+  bottomBarContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 1.0)',
+    height: '20%',
   },
   button: {
     flex: 1,
@@ -73,6 +125,26 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+  },
+  picturePreview: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    height: '100%'
+  },
+  cameraContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    height: '80%',
+  },
+  cameraButton: {
+    alignSelf: 'center',
+    marginTop: '10%'
+  },
+  whiteColor: {
+    color: 'white',
+  },
+  flipButton: {
+    alignSelf: 'flex-end',
   },
 });
 

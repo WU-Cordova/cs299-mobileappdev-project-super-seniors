@@ -12,10 +12,9 @@ Notes:
 
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Alert } from 'react-native';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
-import BottomBar from '../components/BottomBar';
 import ViewDocuments from '../components/ViewDocuments';
 
 /* Setting constants */
@@ -49,6 +48,7 @@ const bottomBarIcons = {
 const Home = ({navigation}) => {
 
   /* Use State */
+  //const [sortedData, setSortedData] = useState(data); //data needs to actally be defined. 
   const [pageType, setPageType] = useState(PageTypes.Documents);
   const [pageView, setPageView] = useState(documentViews.PictureView);
   const [picViewTrue, setPicViewTrue] = useState(true); /* we want the boolean to be opposite of if the view is picture view (picture view = flase) */
@@ -63,9 +63,18 @@ const Home = ({navigation}) => {
       setPageView(documentViews.PictureView)
     }
   };
+  /* Sorting function */
+  const sortAlphabetically = () => {
+    const sorted = [...sortedData].sort((a, b) => a.name.localeCompare(b.name));
+    setSortedData(sorted);
+  };
 
   function navigateDocScan () {
     navigation.navigate('DocScan')
+  }
+
+  function navigatePictureView () {
+    navigation.navigate('PictureView')
   }
 
   /* button presses */
@@ -77,8 +86,8 @@ const Home = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
         <View style={styles.sortButtion}>
-          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={alert('Test')}>
-            <Text>Sort</Text>
+          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigatePictureView}>
+            <Text>Sort</Text> 
           </FontAwesome.Button>  
         </View>
         <Text>{pageType}</Text>
@@ -122,9 +131,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 20,
     fontSize: 20,
+    paddingLeft: 10
   },
   doclist: {
-    padding:20,
+    flex: 1,
     height: '85%',
   },
   topbar: {
