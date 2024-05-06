@@ -73,10 +73,6 @@ const Home = ({navigation}) => {
     navigation.navigate('DocScan')
   }
 
-  function navigatePictureView () {
-    navigation.navigate('PictureView')
-  }
-
   /* button presses */
   const changeViewPress = () => {
     changeDocView()
@@ -86,7 +82,7 @@ const Home = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
         <View style={styles.sortButtion}>
-          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigatePictureView}>
+          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={console.log("Implement Sort")}>
             <Text>Sort</Text> 
           </FontAwesome.Button>  
         </View>
