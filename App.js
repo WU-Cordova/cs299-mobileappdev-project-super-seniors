@@ -17,6 +17,7 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-nati
 // import screens
 import Home from './screens/Home.js';
 import DocScan from './screens/DocScan.js';
+import PictureView from './screens/PictureView.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,10 @@ const App = () => {
         <Stack.Screen 
           name="DocScan"
           component={DocScan}
+        />
+        <Stack.Screen 
+          name="PictureView"
+          component={PictureView}
         />
       </Stack.Navigator>
     </NavigationContainer>
