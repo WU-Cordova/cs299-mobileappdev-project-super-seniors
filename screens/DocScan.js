@@ -11,7 +11,7 @@ Notes:
 
 // import packages
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, TouchableHighlight, View, Image, Alert } from 'react-native';
 import { storage } from 'firebase/storage'
 
@@ -48,6 +48,11 @@ const DocScan = ({navigation}) => {
   const [camera, setCamera] = useState(null);
   const [uploaded, setUploaded] = useState(0);
 
+  useEffect(() => {
+    console.log(getData('photo'))
+    console.log('use effect!!')
+  }, []);
+
   if (!permission) {
     return (
       <View>
@@ -70,8 +75,19 @@ const DocScan = ({navigation}) => {
   const takePicture = async () => {
     if (camera) {
       const photo = await camera.takePictureAsync(null);
+
+      console.log('captured img before')
+      console.log(capturedImage)
+
       setCapturedImage(photo.uri);
-      storeData('photo', photo.uri)
+
+      console.log('captured img after')
+      console.log(photo.uri)
+
+      storeData('photo', {uri: photo})
+      //console.log(photo.uri)
+      console.log('get data')
+      console.log(getData('photo').uri)
     }
     alert("pic")
   }
@@ -95,19 +111,14 @@ const DocScan = ({navigation}) => {
         >
           <PicturePreview 
             onPress={navigatePictureView} 
-            capturedImage={{uri: capturedImage}} 
+            capturedImage={{uri: capturedImage}}
           />
-          {console.log(capturedImage)}
         </Camera>
-      </View>
-      <View style={styles.bottomBarContainer}>
-        <IconButton
-          onPress={takePicture}
-          icon={icons.picButton}
-          iconStyle={styles.whiteColor}
-          buttonStyle={styles.pictureButton}
-          size={80}
-        />
+        <View style={styles.bottomBarContainer}>
+        <PicturePreview 
+            onPress={navigatePictureView} 
+            capturedImage={{uri: capturedImage}}
+          />
         <IconButton
           onPress={takePicture}
           icon={icons.picButton}
@@ -123,6 +134,8 @@ const DocScan = ({navigation}) => {
           size={50}
         />
       </View>
+      </View>
+      
       
     </View>
   );
@@ -134,7 +147,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   camera: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
   buttonContainer: {
     flex: 1,
