@@ -16,12 +16,6 @@ export default function DocumnetScanner ({ imageReaderNav }) {
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
 
-    useEffect(() => {
-        (async () => {
-            
-        })();
-    }, []);
-
     const takePicture = async () => {
         if(camera){
             const data = await camera.takePictureAsync(null)

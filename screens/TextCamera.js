@@ -29,11 +29,6 @@ const TextCamera = ({navigation}) => {
         navigation.navigate('PictureView')
     };
 
-    useEffect(() => {
-        (async () => {
-            
-        })();
-    }, []);
 
     const takePicture = async () => {
         if(camera){

@@ -34,6 +34,8 @@ const PictureView = ({navigation}) => {
     const [fileType, setFileType] = useState(""); 
     const [heightAspect, setHeightAspect] = useState("3"); 
     const [widthAspect, setWidthAspect] = useState("4"); 
+    const [image, setImage] = useState(null);
+
     const handlePickFile = async () => { 
         if (heightAspect == "0" || widthAspect == "0") { 
             const res = 
@@ -152,6 +154,7 @@ const PictureView = ({navigation}) => {
                     alignItems: "center", 
                 }}> 
             </View> 
+            <Text>Scanned Text: </Text>
             <View 
                 style={{ 
                     display: "flex", 
