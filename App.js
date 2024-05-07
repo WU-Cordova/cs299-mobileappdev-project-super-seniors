@@ -1,6 +1,10 @@
 /* 
 To do:
- -
+All these things are just things we need to add for this app to work
+ - Connecting tensor flow to the app
+ - Creating a PictureView.js doc where we can select the line of scanned text
+ - Connecting to firebase
+ - Authentication with firebase
 Notes:
 
 */
@@ -13,6 +17,9 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, Card } from 'react-nati
 // import screens
 import Home from './screens/Home.js';
 import DocScan from './screens/DocScan.js';
+import PictureView from './screens/PictureView.js';
+import TextCamera from './screens/TextCamera.js';
+import ImageReader from './screens/ImageReader.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +35,18 @@ const App = () => {
         <Stack.Screen 
           name="DocScan"
           component={DocScan}
+        />
+        <Stack.Screen 
+          name="PictureView"
+          component={PictureView}
+        />
+        <Stack.Screen 
+          name="TextCamera"
+          component={TextCamera}
+        />
+        <Stack.Screen
+          name="ImageReader"
+          component={ImageReader}
         />
       </Stack.Navigator>
     </NavigationContainer>

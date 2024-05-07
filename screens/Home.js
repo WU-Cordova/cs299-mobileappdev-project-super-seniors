@@ -73,8 +73,8 @@ const Home = ({navigation}) => {
     navigation.navigate('DocScan')
   }
 
-  function navigatePictureView () {
-    navigation.navigate('PictureView')
+  function navigateTextCamera () {
+    navigation.navigate('TextCamera')
   }
 
   /* button presses */
@@ -86,7 +86,7 @@ const Home = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
         <View style={styles.sortButtion}>
-          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigatePictureView}>
+          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigateTextCamera}>
             <Text>Sort</Text> 
           </FontAwesome.Button>  
         </View>
@@ -106,7 +106,7 @@ const Home = ({navigation}) => {
       </View>
 
       <View style={styles.bottomBar}>
-        <TouchableOpacity onPress={navigateDocScan}>
+        <TouchableOpacity onPress={navigateTextCamera}>
           <View style={styles.cameraButton}>
             <FontAwesome
               name={bottomBarIcons.Camera} 

@@ -5,7 +5,9 @@ To Do:
  - Make the docuemnts link to thier respective document views
 */
 import { list } from "firebase/storage";
+
 import { SafeAreaView, View, Image, FlatList, Text, StyleSheet,TouchableOpacity, Alert,Dimensions, PermissionsAndroid } from "react-native";
+
 
 /* Constants */
 var testdata = [
@@ -16,8 +18,10 @@ var testdata = [
 ];
 
 /* Pictures */
+
 const {width} = Dimensions.get('window');
 const itemWidth = (width) / 2;
+
 const BlankDocImage = require('../assets/FillerDoc.png');
 
 const PictureList = props => {
@@ -30,6 +34,7 @@ const PictureList = props => {
         <View style={styles.fileview} >
             <FlatList 
                 data={props.data}
+
                 numColumns={2}
                 renderItem={({item}) => 
                     <View>
@@ -37,6 +42,7 @@ const PictureList = props => {
                         <Image source={BlankDocImage} style={styles.docimage}/>
                         <Text style={styles.listtext}>{item.title}</Text>
                         </TouchableOpacity>
+
                     </View>
                 }
             />
@@ -85,13 +91,17 @@ const ViewDocuments = ({docview}) => {
 const styles = StyleSheet.create({
     fileview: {
         flexDirection: 'column',
+
         justifyContent: 'flex-',
     },
     ///////ListView/////////
+
+
     listview:{
         flexDirection: 'column',
     },
     listbutton:{
+
         alignItems: 'left',
         justifyContent: 'center',
         borderWidth:1,
@@ -110,6 +120,7 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderRadius:1,
         width: itemWidth,
+
     }
 });
 

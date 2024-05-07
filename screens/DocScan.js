@@ -3,18 +3,25 @@ To Do:
  - Connect this page to the PictureView.js document after taking a picture
  - Add Zoom
  - Add Auto Focus
- - Make the header include flip camera, flash, 
+ - Make the header include flash
+ - Camera should flip the inwards view so that the camera view is fliped 180 so the picure captureed is correct
 Notes:
  -
 */
 
 // import packages
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { useState, useEffect } from 'react';
+import { Button, StyleSheet, Text, TouchableHighlight, View, Image, Alert } from 'react-native';
+import { storage } from 'firebase/storage'
+
+import { storeData, getData } from '../config/asyncStorage';
 
 import IconButton from '../components/IconButtons'
+
+const NoImage = require('../assets/NoImage.jpeg')
+
+
 
 // constants
 const icons = {
@@ -22,12 +29,29 @@ const icons = {
   flipCamera: 'refresh'
 };
 
+const PicturePreview = props => {
+  return (
+    <View>
+      <TouchableHighlight onPress={props.onPress}>
+        <Image source={props.capturedImage} 
+        style={styles.picturePreview} />
+      </TouchableHighlight>
+    </View>
+  )
+}
+
 const DocScan = ({navigation}) => {
   const [type, setType] = useState(CameraType.back);
   const [previewVisible, setPreviewVisible] = useState(false)
   const [capturedImage, setCapturedImage] = useState(null)
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+
+  useEffect(() => {
+    console.log(getData('photo'))
+    console.log('use effect!!')
+  }, []);
 
   if (!permission) {
     return (
@@ -51,14 +75,29 @@ const DocScan = ({navigation}) => {
   const takePicture = async () => {
     if (camera) {
       const photo = await camera.takePictureAsync(null);
+
+      console.log('captured img before')
+      console.log(capturedImage)
+
       setCapturedImage(photo.uri);
-      
+
+      console.log('captured img after')
+      console.log(photo.uri)
+
+      storeData('photo', {uri: photo})
+      //console.log(photo.uri)
+      console.log('get data')
+      console.log(getData('photo').uri)
     }
     alert("pic")
   }
 
   function toggleCameraType () {
     setType(current => (current === CameraType.back ? CameraType.front: CameraType.back))
+  };
+
+  function navigatePictureView () {
+    navigation.navigate('PictureView')
   }
 
   return (
@@ -70,30 +109,33 @@ const DocScan = ({navigation}) => {
           ref={ref => setCamera(ref)}
           ratio={'1:1'}
         >
-          {capturedImage && <Image source={{uri: capturedImage}} style={styles.picturePreview} />}
-        </Camera>
-      </View>
-      <View style={styles.bottomBarContainer}>
-        <TouchableOpacity style={styles.cameraButton} onPress={() => takePicture()}>
-          <FontAwesome 
-            name={icons.picButton} 
-            size={80}
-            style={styles.whiteColor}
+          <PicturePreview 
+            onPress={navigatePictureView} 
+            capturedImage={{uri: capturedImage}}
           />
-        </TouchableOpacity>
+        </Camera>
+        <View style={styles.bottomBarContainer}>
+        <PicturePreview 
+            onPress={navigatePictureView} 
+            capturedImage={{uri: capturedImage}}
+          />
+        <IconButton
+          onPress={takePicture}
+          icon={icons.picButton}
+          iconStyle={styles.whiteColor}
+          buttonStyle={styles.pictureButton}
+          size={80}
+        />
         <IconButton 
           onPress={toggleCameraType}
           icon={icons.flipCamera}
           iconStyle={styles.whiteColor}
-          buttonStyle={styles.button}
-          style={styles.flipButton}
+          buttonStyle={styles.flipCameraButton}
+          size={50}
         />
-        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-          <Text>
-            Flip Camera
-          </Text>
-        </TouchableOpacity>
       </View>
+      </View>
+      
       
     </View>
   );
@@ -105,7 +147,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   camera: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
   buttonContainer: {
     flex: 1,
@@ -115,6 +158,8 @@ const styles = StyleSheet.create({
   bottomBarContainer: {
     backgroundColor: 'rgba(0, 0, 0, 1.0)',
     height: '20%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   button: {
     flex: 1,
@@ -136,16 +181,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '80%',
   },
-  cameraButton: {
-    alignSelf: 'center',
+  pictureButton: {
     marginTop: '10%'
   },
   whiteColor: {
     color: 'white',
   },
-  flipButton: {
-    alignSelf: 'flex-end',
-  },
+  flipCameraButton: {
+    marginTop: '15%'
+  }
 });
+
 
 export default DocScan;
