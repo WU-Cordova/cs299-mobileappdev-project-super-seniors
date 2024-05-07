@@ -77,6 +77,10 @@ const Home = ({navigation}) => {
     navigation.navigate('TextCamera')
   }
 
+  function navigateImageReader () {
+    navigation.navigate('ImageReader')
+  }
+
   /* button presses */
   const changeViewPress = () => {
     changeDocView()
@@ -86,7 +90,7 @@ const Home = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
         <View style={styles.sortButtion}>
-          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigateTextCamera}>
+          <FontAwesome.Button name={leftCornerIcons.SortArrow} onPress={navigateImageReader}>
             <Text>Sort</Text> 
           </FontAwesome.Button>  
         </View>
