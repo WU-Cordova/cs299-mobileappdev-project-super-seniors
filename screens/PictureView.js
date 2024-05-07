@@ -23,6 +23,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from 'expo-media-library';
 import { useRef, useState ,useEffect, useCallback, med } from "react"; 
+import {db} from '../services/firebaseconfig'
+import { collection, addDoc, updateDoc, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { StatusBar } from 'expo-status-bar';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
@@ -66,14 +68,26 @@ const PictureView = ({navigation}) => {
         } 
     }; 
 
+    const firebaseSave = async () => {
+        try {
+          const imageRef = collection(db, "Images");
+          await addDoc(imageRef,
+            {
+              ImageUri: fileUri
+            });
+            MediaLibrary.saveToLibraryAsync(fileUri);
+            console.log(fileUri)
+        } catch (e) {
+          console.error("Error received! ", e);
+        }
+      };
+
     const saveImage = ()=> {
-        Alert.alert('Do you want to save this image?', 'Save image to CameraRoll', [
+        Alert.alert('Do you want to save this image?', 'Save image to CameraRoll and firebase', [
             {
                 isPreferred: true,
                 text: 'Yes',
-                onPress: () => {
-                MediaLibrary.saveToLibraryAsync(fileUri);
-                },
+                onPress: firebaseSave,
                 style: 'default',
             },
             {
